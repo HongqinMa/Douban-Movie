@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ngRoute 的使用</title>
+</head>
+<body ng-app="DemoApp">
+    <header>
+      <h1>ng 中的路由模块 ngRoute 的使用</h1>
+    </header>
+    <nav>
+      <ul>
+        <li><a href="#/in_theaters">正在热映</a></li>
+        <li><a href="#/coming_soon">即将上映</a></li>
+        <li><a href="#/top250">top250</a></li>
+      </ul>
+    </nav>
+    <article>
+      <div ng-view>
+        
+      </div>
+    </article>
+    <footer></footer>
+  </body>
+  <script src="../node_modules/angular/angular.js"></script>
+  <script src="../node_modules/angular-route/angular-route.js"></script>
+  <script>
+    angular.module('DemoApp', ['ngRoute'])
+    .config(['$routeProvider', function ($routeProvider) {
+      $routeProvider
+        // 请求这个路径的时候，访问 a.html，把哪个控制器作用的这个视图上
+        .when('/in_theaters', {
+          templateUrl: 'a.html',
+          controller: 'DemoAController'
+        })
+        .when('/coming_soon', {
+          templateUrl: 'b.html',
+          controller: 'DemoBController'
+        })
+        .when('/top250', {
+          templateUrl: 'c.html',
+          controller: 'DemoCController'
+        })
+        // 当匹配不到以上路径的时候，让它跳转
+        .otherwise({
+          redirectTo: '/in_theaters'
+        });
+    }])
+    .controller('DemoAController', ['$scope', function ($scope) {
+      $scope.title = 'AAA';
+    }])
+    .controller('DemoBController', ['$scope', function ($scope) {
+      $scope.movie = {
+        src: 'https://img3.doubanio.com/view/movie_poster_cover/ipst/public/p2392444121.jpg',
+        name: '神奇动物在哪里'
+      };
+    }])
+    .controller('DemoCController', ['$scope', function ($scope) {
+      $scope.fruits = [
+        '苹果',
+        '香蕉',
+        '橘子',
+        '菠萝'
+      ];
+    }]);
+  </script>
+</html>

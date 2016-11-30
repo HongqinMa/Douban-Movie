@@ -1,0 +1,24 @@
+<h1 class="page-header">{{ title }}</h1>
+<div class="list-group">
+  <a ng-repeat="movie in movie_list.subjects track by $index" href="#/subject/{{movie.id}}" class="list-group-item" >
+    <div class="media">
+      <div class="media-left">
+        <img ng-src="{{ movie.images.small }}" alt="{{ movie.alt }}">
+      </div>
+      <div class="media-body">
+        <h4 class="media-heading">{{ movie.title }}</h4>
+        <p>类型：{{ movie.genres.join('、') }} </p>
+        <p>导演：<span ng-repeat="director in movie.directors track by $index">{{ director.name }} {{ $last?"":"、" }} </span></p>
+        <p>主演：<span ng-repeat="cast in movie.casts track by $index">{{ cast.name }} {{ $last?"":"、" }} </span></p>
+      </div>
+    </div>
+  </a>
+</div>
+
+<p>总共：{{ total }}条记录，第{{ page }}/{{ totalPage }}页</p>
+<nav>
+  <ul class="pager">
+    <li ng-class="{disabled:page === 1}"><a ng-click="go(page-1)" href="">上一页</a></li>
+    <li ng-class="{disabled:page === totalPage}"><a ng-click="go(page+1)" href="">下一页</a></li>
+  </ul>
+</nav>
